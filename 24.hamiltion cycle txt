@@ -1,0 +1,35 @@
+24. You are given an undirected graph represented by a list of edges and the number of vertices n. Your task is to determine if there exists a Hamiltonian cycle in the graph. A Hamiltonian cycle is a cycle that visits each vertex exactly once and returns to the starting vertex. Write a function that takes the list of edges and the number of vertices as input and returns true if there exists a Hamiltonian cycle in the graph, otherwise return false.
+Example:edges = [(0, 1), (1, 2), (2, 3), (3, 0), (0, 2)]  and n = 4
+
+def has_hamiltonian_cycle(edges,n):
+    from itertools import permutations
+    adj_matrix=[[0]*n for _ in range(n)]
+    for u, v in edges:
+        adj_matrix[u][v]=1
+        adj_matrix[v][u]=1
+    def is_valid(v,pos,path)
+        if adj_matrix[path[pos-1]][v]==0:
+            return False
+              if v in path:
+            return False
+        return True
+    def hamiltonian_cycle_util(path, pos):
+               if pos==n:
+            return adj_matrix[path[pos-1]][path[0]]==1
+        for v in range(1,n):
+            if is_valid(v,pos,path):
+                path[pos]=v
+                if hamiltonian_cycle_util(path,pos+1):
+                    return True
+                path[pos]=-1
+        return False
+    path=[-1]*n
+    path[0]=0
+    if hamiltonian_cycle_util(path,1):
+        return True
+    return False
+edges=[(0, 1),(1, 2),(2, 3),(3, 0),(0, 2)]
+n=4
+print(has_hamiltonian_cycle(edges,n))
+
+Output:True
