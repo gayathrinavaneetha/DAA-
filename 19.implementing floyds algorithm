@@ -1,0 +1,97 @@
+Implement Floyd's Algorithm to find the shortest path between all pairs of cities. Display the distance matrix before and after applying the algorithm. Identify and print the shortest path
+Input: n = 4,edges =[[0,1,3],[1,2,1],[1,3,4],[2,3,1]],distanceThreshold = 4
+Output: 3
+Explanation: The figure above describes the graph. 
+The neighboring cities at a distanceThreshold = 4 for each city are:
+City 0 -> [City 1, City 2] 
+City 1 -> [City 0, City 2, City 3] 
+City 2 -> [City 0, City 1, City 3] 
+City 3 -> [City 1, City 2] 
+Cities 0 and 3 have 2 neighboring cities at a distanceThreshold = 4, but we have to return city 3 since it has the greatest number.
+Test cases :
+a)You are given a small network of 4 cities connected by roads with the following distances:
+    City 1 to City 2: 3
+    City 1 to City 3: 8
+    City 1 to City 4: -4
+    City 2 to City 4: 1
+    City 2 to City 3: 4
+    City 3 to City 1: 2
+    City 4 to City 3: -5
+    City 4 to City 2: 6
+Implement Floyd's Algorithm to find the shortest path between all pairs of cities.Display the distance matrix before and after applying the algorithm.Identify and print the shortest path from City 1 to City 3.
+Input as above
+Output : City 1 to City 3 = -9 
+b.Consider a network with 6 routers. The initial routing table is as follows:
+    Router A to Router B: 1
+    Router A to Router C: 5
+    Router B to Router C: 2
+    Router B to Router D: 1
+    Router C to Router E: 3
+    Router D to Router E: 1
+    Router D to Router F: 6
+    Router E to Router F: 2
+Write a Program to implement Floyd's Algorithm to calculate the shortest paths between all pairs of routers. Simulate a change where the link between Router B and Router D fails. Update the distance matrix accordingly. Display the shortest path from Router A to Router F before and after the link failure.
+Input as above
+Output :Router A to Router F=5
+
+import numpy as np
+def floyd_warshall(n, edges):
+    # Initialize distance matrix with infinity and 0s on the diagonal
+    dist=np.full((n, n),float('inf'))
+    np.fill_diagonal(dist,0)
+    for u, v, w in edges:
+        dist[u][v]=w
+        dist[v][u]=w    
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if dist[i][j]>dist[i][k]+dist[k][j]:
+                    dist[i][j]=dist[i][k]+dist[k][j]
+    return dist
+def print_matrix(matrix):
+    for row in matrix:
+        print(' '.join(f'{item:7}' if item !=float('inf') else 'INF' for item in row))
+print("Test Case C:")
+n = 6
+edges = [
+    [0, 1, 1], 
+    [0, 2, 5],  
+    [1, 2, 2], 
+    [1, 3, 1], 
+    [2, 4, 3], 
+    [3, 4, 1], 
+    [3, 5, 6], 
+    [4, 5, 2]
+]
+dist_matrix_before=floyd_warshall(n,edges)
+print("Distance Matrix before link failure:")
+print_matrix(dist_matrix_before)
+edges.remove([1,3,1])
+dist_matrix_after = floyd_warshall(n,edges)
+print("\nDistance Matrix after link failure:")
+print_matrix(dist_matrix_after)
+print(f"\nShortest path from Router A to Router F before link failure:{dist_matrix_before[0][5]}")
+print(f"Shortest path from Router A to Router F after link failure:{dist_matrix_after[0][5]}")
+
+output:
+
+Distance Matrix before link failure:
+      0      1      3      2      6      5
+      1      0      2      1      4      5
+      3      2      0      2      3      4
+      2      1      2      0      1      6
+      6      4      3      1      0      2
+      5      5      4      6      2      0
+
+Distance Matrix after link failure:
+      0      1      3      INF    4      5
+      1      0      2      INF    4      5
+      3      2      0      INF    3      4
+      INF    INF    INF    0      1      6
+      4      4      3      1      0      2
+      5      5      4      6      2      0
+
+Shortest Path from Router A to Router F:
+Before Link Failure:5
+After Link Failure:6
+
