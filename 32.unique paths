@@ -1,0 +1,12 @@
+32.A robot is located at the top-left corner of a m×n grid .The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid. How many possible unique paths are there?
+(i)Input: m=7,n=3    
+Output: 28
+
+from math import comb
+def unique_paths(m, n):
+      return comb(m+n-2,m-1)
+m = 7
+n = 3
+print(unique_paths(m, n))
+
+Output: 28
