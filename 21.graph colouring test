@@ -1,0 +1,46 @@
+GRAPH COLOURING:
+21.You and your friends are assigned the task of coloring a map with a limited number of colors. The map is represented as a list of regions and their adjacency relationships. The rules are as follows: At each step, you can choose any uncolored region and color it with any available color. Your friend Alice follows the same strategy immediately after you, and then your friend Bob follows suit. You want to maximize the number of regions you personally color. Write a function that takes the map's adjacency list representation and returns the maximum number of regions you can color before all regions are colored.Write a program to implement the Graph coloring technique for an undirected graph. Implement an algorithm with minimum number of colors.
+edges = [(0, 1), (1, 2), (2, 3), (3, 0), (0, 2)] No. of vertices, n = 4 give code without comments and give output
+
+from itertools import count
+def is_safe(graph,color,v,c):
+    for neighbor in graph[v]:
+        if color[neighbor]==c:
+            return False
+    return True
+def graph_coloring_util(graph,m,color,v):
+    if v==len(graph):
+        return True
+    for c in range(1,m+1):
+        if is_safe(graph,color,v,c):
+            color[v]=c
+            if graph_coloring_util(graph,m,color,v+1):
+                return True
+            color[v]=0
+    return False
+def find_min_colors(graph):
+    for m in count(1):
+        color=[0]*len(graph)
+        if graph_coloring_util(graph,m,color,0):
+            return m
+def max_regions_colored(graph):
+    min_colors=find_min_colors(graph)
+    color=[0]*len(graph)
+    regions_colored=0
+    for v in range(len(graph)):
+        for c in range(1,min_colors+1):
+            if is_safe(graph,color,v,c):
+                color[v]=c
+                regions_colored+=1
+                break
+    return regions_colored
+edges=[(0, 1),(1, 2),(2, 3),(3, 0),(0, 2)]
+n=4
+graph=[[] for _ in range(n)]
+for u, v in edges:
+    graph[u].append(v)
+    graph[v].append(u)
+print(max_regions_colored(graph))
+
+output: 4
+
