@@ -1,0 +1,43 @@
+27.Write a program to implement Meet in the Middle Technique. Given an array of integers and a target sum, find the subset whose sum is closest to the target. You will use the Meet in the Middle technique to efficiently find this subset.
+a) Set[] = {45, 34, 4, 12, 5, 2} 	
+Target Sum : 42
+
+from itertools import combinations
+def generate_subset_sums(arr):
+      subset_sums = set()
+    for r in range(len(arr) + 1):
+        for combo in combinations(arr, r):
+            subset_sums.add(sum(combo))
+    return sorted(subset_sums)
+def closest_sum(arr, target):
+      n=len(arr)
+    mid=n//2
+    left_part=arr[:mid]
+    right_part=arr[mid:]
+    left_sums=generate_subset_sums(left_part)
+    right_sums=generate_subset_sums(right_part)
+    closest=float('inf')
+    closest_pair=(None, None)
+    for ls in left_sums:
+        low,high=0,len(right_sums) - 1
+        while low<=high:
+            mid=(low + high)//2
+            current_sum=ls+right_sums[mid]
+            if abs(current_sum-target)<abs(closest-target):
+                closest=current_sum
+                closest_pair=(ls,right_sums[mid])
+            if current_sum<target:
+                low=mid+1
+            else:
+                high=mid-1
+    return closest,closest_pair
+arr_a=[45,34,4,12,5,2]
+target_a=42
+result_a,pair_a=closest_sum(arr_a,target_a)
+print(f"Problem a:Closest subset sum to{target_a} is {result_a} (Subset sums: {pair_a})")
+
+output:
+
+Problem a:Closest subset sum to 42 is 41 (Subset sums:(34, 7))
+Problem b:Closest subset sum to 10 is 10 (Subset sums:(7, 3))
+
