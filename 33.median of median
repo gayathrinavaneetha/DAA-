@@ -1,0 +1,29 @@
+33.To Implement the Median of Medians algorithm ensures that you handle the worst-case time complexity efficiently while finding the k-th smallest element in an unsorted array.
+arr = [12, 3, 5, 7, 19] k = 2			
+Expected Output:5
+
+def median_of_medians(arr):
+    def partition(arr, pivot):
+        less=[x for x in arr if x < pivot]
+        equal=[x for x in arr if x == pivot]
+        greater=[x for x in arr if x > pivot]
+        return less,equal,greater
+    def select(arr,k):
+        if len(arr)<= 5:
+            return sorted(arr)[k]
+        chunks=[arr[i:i + 5] for i in range(0,len(arr),5)]
+        medians=[sorted(chunk)[len(chunk)//2] for chunk in chunks]
+        pivot = select(medians,len(medians)//2)
+        less,equal,greater=partition(arr,pivot)
+        if k<len(less):
+            return select(less,k)
+        elif k<len(less)+len(equal):
+            return equal[0]
+        else:
+            return select(greater,k-len(less)-len(equal))
+    return select(arr,k)
+arr = [12, 3, 5, 7, 19]
+k = 2  
+print(median_of_medians(arr, k))
+
+output: 5
