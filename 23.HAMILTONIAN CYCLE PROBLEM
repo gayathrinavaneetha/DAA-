@@ -1,0 +1,32 @@
+HAMILTONIAN CYCLE PROBLEM
+23.You are given an undirected graph represented by a list of edges and the number of vertices n. Your task is to determine if there exists a Hamiltonian cycle in the graph. A Hamiltonian cycle is a cycle that visits each vertex exactly once and returns to the starting vertex. Write a function that takes the list of edges and the number of vertices as input and returns true if there exists a Hamiltonian cycle in the graph, otherwise return false.
+Example: Given edges = [(0, 1), (1, 2), (2, 3), (3, 0), (0, 2), (2, 4), (4, 0)] and n = 5
+
+def has_hamiltonian_cycle(edges,n):
+    # Create an adjacency matrix
+    adj_matrix=[[0]*nfor _ in range(n)]
+    for u, v in edges:
+        adj_matrix[u][v]=1
+        adj_matrix[v][u]=1
+     def is_hamiltonian_cycle(v,path,visited):
+        if len(path)==n
+            return adj_matrix[path[-1]][path[0]]==1
+        for i in range(n):
+            if adj_matrix[v][i]==1 and not visited[i]:
+                visited[i]=True
+                path.append(i)
+                if is_hamiltonian_cycle(i,path,visited):
+                    return True
+                visited[i]=False
+                path.pop()
+        return False
+    visited = [False]*n
+    path=[]
+    visited[0]=True
+    path.append(0)
+    return is_hamiltonian_cycle(0,path,visited)
+edges=[(0, 1),(1, 2),(2, 3),(3, 0),(0, 2),(2, 4),(4, 0)]
+n=5
+print(has_hamiltonian_cycle(edges,n))
+
+Output: True
