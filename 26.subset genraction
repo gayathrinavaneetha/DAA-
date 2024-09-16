@@ -1,0 +1,19 @@
+26. Write a program to implement the concept of subset generation. Given a set of unique integers and a specific integer 3, generate all subsets that contain the element 3. Return a list of lists where each inner list is a subset containing the element 3
+E = [2, 3, 4, 5], x = 3,
+The subsets containing 3 : [3], [2, 3], [3, 4], [3, 5], [2, 3, 4], [2, 3, 5], [3, 4, 5], [2, 3, 4, 5]
+
+from itertools import combinations
+def subsets_containing_element(E,x):
+    result=[]
+    n=len(E)
+    for r in range(1,n+1):
+              for subset in combinations(E,r):
+            if x in subset:
+                result.append(list(subset))      
+    return result
+E=[2,3,4,5]
+x=3
+subsets=subsets_containing_element(E,x)
+print("The subsets containing",x,":",subsets)
+
+The subsets containing 3 :[[3],[2, 3],[3, 4],[3, 5],[2, 3, 4],[2, 3, 5],[3, 4, 5],[2, 3, 4, 5]]
