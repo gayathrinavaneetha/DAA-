@@ -1,0 +1,32 @@
+29.Given an m x n grid and a ball at a starting cell, find the number of ways to move the ball out of the grid boundary in exactly N steps.
+Input: m=2,n=2,N=2,i=0,j=0
+Output: 6
+
+def findPaths(m,n,N,i,j):
+      directions=[(-1,0),(1,0),(0,-1),(0,1)]
+    dp=[[[0]*n for _ in range(m)] for _ in range(N+1)]
+    dp[0][i][j]=1
+    for steps in range(N):
+        for r in range(m):
+            for c in range(n):
+                if dp[steps][r][c] > 0:
+                    for dr,dc in directions:
+                        nr,nc =r+dr,c+dc
+                        if 0<=nr<m and 0<=nc<n:
+                            dp[steps+1][nr][nc]+=dp[steps][r][c]
+                        else
+                            dp[steps + 1][nr][nc] += dp[steps][r][c]
+    result = 0
+    for r in range(m):
+        for c in range(n):
+            if r==0 or r==m-1 or c==0 or c==n-1:
+                result+=dp[N][r][c]
+    return result
+m = 2
+n = 2
+N = 2
+i = 0
+j = 0
+print(findPaths(m,n,N,i,j))
+
+Output: 6
