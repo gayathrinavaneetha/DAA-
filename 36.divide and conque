@@ -1,0 +1,27 @@
+36.Given four lists A, B, C, D of integer values,Write a program to 
+compute how many tuples (i, j, k, l) there are such that 
+A[i] + B[j] + C[k] + D[l] is zero.
+(i)Input: A = [1, 2], B = [-2, -1], C = [-1, 2], D = [0, 2]
+Output: 2
+
+from collections import defaultdict
+def count_tuples(A,B,C,D):
+     AB_sum_count=defaultdict(int)
+    for a in A:
+        for b in B:
+            AB_sum_count[a+b]+=1
+       count = 0
+    for c in C:
+        for d in D:
+            target=-(c+d)
+            if target in AB_sum_count:
+                count += AB_sum_count[target]
+    return count
+A = [1, 2]
+B = [-2, -1]
+C = [-1, 2]
+D = [0, 2]
+result=count_tuples(A,B,C,D)
+print(result)
+
+Output: 2
