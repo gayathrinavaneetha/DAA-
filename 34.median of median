@@ -1,0 +1,46 @@
+34.To Implement a function median_of_medians(arr,k) that takes an unsorted array arr and an integer k, and returns the k-th smallest element in the array.
+arr=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10] k = 6
+arr=[23, 17, 31, 44, 55, 21, 20, 18, 19, 27] k = 5
+Output: An integer representing the k-th smallest element in the array.
+
+def median_of_medians(arr,k):
+    def partition(arr,low,high,pivot_index):
+        pivot_value=arr[pivot_index]
+        arr[pivot_index],arr[high]=arr[high],arr[pivot_index]
+        store_index=low
+        for i in range(low,high):
+            if arr[i]<pivot_value:
+                arr[store_index],arr[i]=arr[i],arr[store_index]
+                store_index+=1
+        arr[store_index],arr[high]=arr[high],arr[store_index]
+        return store_index
+    def select(arr,low,high,k):
+        if low==high:
+            return arr[low] 
+        pivot_index=median_of_medians(arr,low,high)
+        pivot_index=partition(arr,low,high,pivot_index)
+        if k==pivot_index:
+            return arr[k]
+        elif k<pivot_index:
+            return select(arr,low,pivot_index-1,k)
+        else:
+            return select(arr,pivot_index+1,high,k)
+    def median_of_medians(arr,low,high)
+        if high-low<5:
+            return median(arr,low,high)
+        medians=[]
+        for i in range(low,high+1,5):
+            sub_high=min(i+4,high)
+            medians.append(median(arr,i,sub_high))
+        return select(medians,0,len(medians)-1,len(medians)//2)
+    def median(arr,low,high):
+        subarr=sorted(arr[low:high + 1])
+        mid=len(subarr)//2
+        return subarr[mid]
+    return select(arr, 0, len(arr) - 1, k - 1)  # k is 1-based index, but we use 0-based
+
+arr1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+k1 = 6
+print(median_of_medians(arr1, k1))
+
+Output: 6
