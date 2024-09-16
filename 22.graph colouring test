@@ -1,0 +1,41 @@
+22.You and your friends are tasked with coloring a map using a limited set of colors, with the following rules: At each step, you can choose any region of the map that hasn't been colored yet and color it with any available color. Your friend Alice will then color the next region using the same strategy, followed by your friend Bob. You aim to maximize the number of regions you color. Given a map represented as a list of regions and their adjacency relationships, write a function to determine the maximum number of regions you can color. Write a program to implement the Graph coloring technique for an undirected graph. Implement an algorithm with minimum number of colors.
+edges = [(0, 1), (1, 2), (2, 3), (3, 0), (0, 2)] No. of vertices, n = 4, k = 3
+
+def graph_coloring_util(graph,colors,vertex,n,k):
+    if vertex==n:
+        return True
+    for color in range(1,k + 1):
+        if is_safe(graph,colors,vertex,color):
+            colors[vertex]=color
+            if graph_coloring_util(graph,colors,vertex+1,n,k):
+                return True
+            colors[vertex]=0
+    return False
+def is_safe(graph, colors, vertex, color):
+    for neighbor in graph[vertex]:
+        if colors[neighbor]==color:
+            return False
+    return True
+def min_colors_needed(graph,n):
+    k=1
+    colors=[-1]*n
+    while not graph_coloring_util(graph,colors,0,nk):
+        k+=1
+    return k
+def create_adjacency_list(edges,n):
+    graph=[[] for _ in range(n)]
+    for u, v in edges:
+        graph[u].append(v)
+        graph[v].append(u)
+    return graph
+def main():
+    edges=[(0, 1),(1, 2),(2, 3),(3, 0),(0, 2)]
+    n=4
+    grap=create_adjacency_list(edges, n)
+    k=min_colors_needed(graph, n)
+    print(f"Minimum number of colors needed:{k}")
+if __name__ == "__main__":
+    main()
+
+output:
+Minimum number of colors needed: 3
