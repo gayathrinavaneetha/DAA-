@@ -1,0 +1,27 @@
+def combination_sum(candidates, target):
+    result = []
+    
+    def backtrack(remaining, combination, start):
+        if remaining == 0:
+            result.append(list(combination))
+            return
+        elif remaining < 0:
+            return
+        
+        for i in range(start, len(candidates)):
+            combination.append(candidates[i])
+            backtrack(remaining - candidates[i], combination, i)  # Allow the same number to be used
+            combination.pop()
+    
+    backtrack(target, [], 0)
+    return result
+
+# Example input
+candidates = [2, 3, 6, 7]
+target = 7
+
+# Find combinations
+combinations = combination_sum(candidates, target)
+
+# Output the result
+print(combinations)
