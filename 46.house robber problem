@@ -1,0 +1,37 @@
+def rob_linear(nums):
+    n = len(nums)
+    if n == 0:
+        return 0
+    if n == 1:
+        return nums[0]
+    
+    dp = [0] * n
+    dp[0] = nums[0]
+    dp[1] = max(nums[0], nums[1])
+    
+    for i in range(2, n):
+        dp[i] = max(dp[i-1], dp[i-2] + nums[i])
+    
+    return dp[-1]
+
+def rob(nums):
+    n = len(nums)
+    if n == 0:
+        return 0
+    if n == 1:
+        return nums[0]
+    if n == 2:
+        return max(nums)
+    
+    # Robbing excluding the last house or excluding the first house
+    return max(rob_linear(nums[:-1]), rob_linear(nums[1:]))
+
+# Test case 1
+nums1 = [2, 3, 2]
+print("Input:", nums1)
+print("Output:", rob(nums1))  # Output: 3
+
+# Test case 2
+nums2 = [1, 2, 3, 1]
+print("Input:", nums2)
+print("Output:", rob(nums2))  # Output: 4
