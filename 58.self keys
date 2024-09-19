@@ -1,0 +1,56 @@
+Input N =4, Keys = {A,B,C,D} Frequencies =  {01.02.,0.3,0.4}
+Output : 1.7
+Cost Table
+	0	1	2	3	4
+1	0	0.1	0.4	1.1	1.7
+2		0	0.2	0.8	0.4
+3			0	0.4	1.0
+4				0	0.3
+5					0
+Root table
+	1	2	3	4
+1	1	2	3	3
+2		2	3	3
+3			3	3
+4				4
+Input:  keys[] = {10, 12}, freq[] = {34, 50}
+Output = 118
+a)	Input:  keys[] = {10, 12, 20}, freq[] = {34, 8, 50}
+Output = 142
+class OBST:
+    def __init__(self, keys, freq):
+        self.keys = keys
+        self.freq = freq
+        self.n = len(keys)
+        self.cost = [[0] * (self.n + 1) for _ in range(self.n + 1)]
+        self.root = [[0] * (self.n + 1) for _ in range(self.n + 1)]
+
+    def optimal_bst(self):
+        for i in range(self.n):
+            self.cost[i][i] = self.freq[i]
+
+        for length in range(2, self.n + 1):
+            for i in range(self.n - length + 1):
+                j = i + length - 1
+                self.cost[i][j] = float('inf')
+                for r in range(i, j + 1):
+                    c = (self.cost[i][r - 1] if r > i else 0) + \
+                        (self.cost[r + 1][j] if r < j else 0) + \
+                        sum(self.freq[i:j + 1])
+                    if c < self.cost[i][j]:
+                        self.cost[i][j] = c
+                        self.root[i][j] = r
+
+    def print_cost_and_root(self):
+        print("Cost Table")
+        for row in self.cost:
+            print("\t".join(map(str, row)))
+        print("Root Table")
+        for row in self.root:
+            print("\t".join(map(str, row)))
+
+keys = ['A', 'B', 'C', 'D']
+freq = [0.1, 0.2, 0.4, 0.3]
+obst = OBST(keys, freq)
+obst.optimal_bst()
+obst.print_cost_and_root()
