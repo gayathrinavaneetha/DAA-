@@ -1,0 +1,25 @@
+Input : N= 9, a[] = {5,10,15,20,25,30,35,40,45}, search key = 20
+Output :4
+Test cases
+Input : N= 6, a[] = {10,20,30,40,50,60}, search key = 50
+Output :5
+Input : N= 7, a[] = {21,32,40,54,65,76,87}, search key = 32
+Output :2
+
+def binary_search(arr, key):
+    left, right = 0, len(arr) - 1
+    comparisons = 0
+    while left <= right:
+        mid = left + (right - left) // 2
+        comparisons += 1      
+        if arr[mid] == key:
+            return mid, comparisons
+        elif arr[mid] < key:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1, comparisons
+array = [5, 10, 15, 20, 25, 30, 35, 40, 45]
+search_key = 20
+index, comparison_count = binary_search(array, search_key)
+print(f"Index of {search_key}: {index}, Comparisons made: {comparison_count}")
