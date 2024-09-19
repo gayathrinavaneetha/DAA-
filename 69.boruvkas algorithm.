@@ -1,0 +1,59 @@
+    def __init__(self, vertices):
+        self.V = vertices
+        self.graph = []
+    def add_edge(self, u, v, w):
+        self.graph.append([u, v, w])
+    def find(self, parent, i):
+        if parent[i] == i:
+            return i
+        return self.find(parent, parent[i])
+    def union(self, parent, rank, x, y):
+        xroot = self.find(parent, x)
+        yroot = self.find(parent, y)
+
+        if rank[xroot] < rank[yroot]:
+            parent[xroot] = yroot
+        elif rank[xroot] > rank[yroot]:
+            parent[yroot] = xroot
+        else:
+            parent[yroot] = xroot
+            rank[xroot] += 1
+    def boruvka_mst(self):
+        parent = []
+        rank = []
+        cheapest = []
+        num_trees = self.V
+        mst_weight = 0
+        for node in range(self.V):
+            parent.append(node)
+            rank.append(0)
+            cheapest = [-1] * len(self.graph)
+        while num_trees > 1:
+            for i in range(len(self.graph)):
+                u, v, w = self.graph[i]
+                set_u = self.find(parent, u)
+                set_v = self.find(parent, v)
+                if set_u != set_v:
+                    if cheapest[set_u] == -1 or cheapest[set_u][2] > w:
+                        cheapest[set_u] = [u, v, w]
+                    if cheapest[set_v] == -1 or cheapest[set_v][2] > w:
+                        cheapest[set_v] = [u, v, w]
+            for node in range(self.V):
+                if cheapest[node] != -1:
+                    u, v, w = cheapest[node]
+                    set_u = self.find(parent, u)
+                    set_v = self.find(parent, v)
+                    if set_u != set_v:
+                        mst_weight += w
+                        self.union(parent, rank, set_u, set_v)
+                        print(f"Edge {u} - {v} with weight {w} included in MST")
+            cheapest = [-1] * len(self.graph)
+            num_trees -= 1
+        print(f"Total weight of MST is {mst_weight}")
+g = Graph(4)
+g.add_edge(0, 1, 10)
+g.add_edge(0, 2, 6)
+g.add_edge(0, 3, 5)
+g.add_edge(1, 3, 15)
+g.add_edge(2, 3, 4)
+g.boruvka_mst()
