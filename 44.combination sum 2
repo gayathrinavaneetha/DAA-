@@ -1,0 +1,29 @@
+def combination_sum_ii(candidates, target):
+    candidates.sort()
+    result = []
+    
+    def backtrack(start, remaining, combination):
+        if remaining == 0:
+            result.append(list(combination))
+            return
+        for i in range(start, len(candidates)):
+            if i > start and candidates[i] == candidates[i - 1]:
+                continue  # Skip duplicates
+            if candidates[i] > remaining:
+                break  # Early stopping
+            combination.append(candidates[i])
+            backtrack(i + 1, remaining - candidates[i], combination)
+            combination.pop()
+    
+    backtrack(0, target, [])
+    return result
+
+# Example input
+candidates = [10, 1, 2, 7, 6, 1, 5]
+target = 8
+
+# Find combinations
+combinations = combination_sum_ii(candidates, target)
+
+# Output the result
+print(combinations)
