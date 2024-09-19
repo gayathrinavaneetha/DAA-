@@ -1,0 +1,12 @@
+#Input: words = ["mass","as","hero","superhero"]
+#Output: ["as","hero"
+def stringSubstrings(words):
+    substrings = set()
+    for i in range(len(words)):
+        for j in range(len(words)):
+            if i != j and words[i] in words[j]:
+                substrings.add(words[i])
+    return list(substrings)
+words = ["mass", "as", "hero", "superhero"]
+result = stringSubstrings(words)
+print(result)
