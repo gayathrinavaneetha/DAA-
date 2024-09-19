@@ -1,0 +1,18 @@
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[0]
+    less_than_pivot = [x for x in arr[1:] if x <= pivot]
+    greater_than_pivot = [x for x in arr[1:] if x > pivot]
+    print(f"Pivot: {pivot}, Less: {less_than_pivot}, Greater: {greater_than_pivot}")
+    
+    return quick_sort(less_than_pivot) + [pivot] + quick_sort(greater_than_pivot)
+array1 = [10, 16, 8, 12, 15, 6, 3, 9, 5]
+sorted_array1 = quick_sort(array1)
+print("Sorted Array 1:", sorted_array1)
+array2 = [12, 4, 78, 23, 45, 67, 89, 1]
+sorted_array2 = quick_sort(array2)
+print("Sorted Array 2:", sorted_array2)
+array3 = [38, 27, 43, 3, 9, 82, 10]
+sorted_array3 = quick_sort(array3)
+print("Sorted Array 3:", sorted_array3)
