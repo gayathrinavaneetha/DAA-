@@ -1,0 +1,29 @@
+def build_huffman_codes(characters, frequencies):
+    huffman_codes = sorted(zip(characters, frequencies), key=lambda x: x[1])
+    code_dict = {}
+    for i, (char, _) in enumerate(huffman_codes):
+        code_dict[char] = bin(i)[2:]
+    return code_dict
+
+def decode_huffman(encoded_string, code_dict):
+    reversed_dict = {v: k for k, v in code_dict.items()}
+    decoded_message = ""
+    current_code = ""
+
+    for bit in encoded_string:
+        current_code += bit
+        if current_code in reversed_dict:
+            decoded_message += reversed_dict[current_code]
+            current_code = ""
+
+    return decoded_message
+
+n = 4
+characters = ['a', 'b', 'c', 'd']
+frequencies = [5, 9, 12, 13]
+encoded_string = '1101100111110'
+
+code_dict = build_huffman_codes(characters, frequencies)
+decoded_message = decode_huffman(encoded_string, code_dict)
+
+print(decoded_message)
