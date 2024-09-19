@@ -1,0 +1,17 @@
+//Input: words = ["mass","as","hero","superhero"]
+//Output: ["as","hero"]
+
+def find_substrings(words):
+    result = set()
+    
+    for i in range(len(words)):
+        for j in range(len(words)):
+            if i != j:
+                if words[i] in words[j]:
+                    result.add(words[i])
+    
+    return list(result)
+
+# Example usage
+words = ["mass", "as", "hero", "superhero"]
+print(find_substrings(words))
