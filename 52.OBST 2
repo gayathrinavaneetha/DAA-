@@ -1,0 +1,58 @@
+def optimal_bst(keys, freq):
+    n = len(keys)
+    cost = [[0] * n for _ in range(n)]
+    root = [[0] * n for _ in range(n)]
+    
+    for i in range(n):
+        cost[i][i] = freq[i]
+        root[i][i] = i
+
+    for length in range(2, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            cost[i][j] = float('inf')
+            for r in range(i, j + 1):
+                sum_freq = sum(freq[k] for k in range(i, j + 1))
+                current_cost = (cost[i][r - 1] if r > i else 0) + (cost[r + 1][j] if r < j else 0) + sum_freq
+                if current_cost < cost[i][j]:
+                    cost[i][j] = current_cost
+                    root[i][j] = r
+
+    return cost, root
+
+def print_bst_structure(root, keys):
+    def print_tree(r, level):
+        if r < 0:
+            return
+        print_tree(root[0][r - 1], level + 1)
+        print(' ' * 4 * level + '-> ' + str(keys[r]))
+        print_tree(root[r + 1][len(keys) - 1], level + 1)
+
+    print_tree(root[0][len(keys) - 1], 0)
+
+# Input
+keys = [10, 12, 16, 21]
+frequencies = [4, 2, 6, 3]
+
+# Calculate the OBST
+cost_matrix, root_matrix = optimal_bst(keys, frequencies)
+cost = cost_matrix[0][len(keys) - 1]
+
+# Display the results
+print("Cost of the Optimal Binary Search Tree:", cost)
+print("Root matrix:")
+for row in root_matrix:
+    print(row)
+
+print("\nStructure of the Optimal Binary Search Tree:")
+print_bst_structure(root_matrix, keys)
+
+# Test case for keys {10, 12} and frequencies {34, 50}
+keys_test = [10, 12]
+frequencies_test = [34, 50]
+
+cost_matrix_test, root_matrix_test = optimal_bst(keys_test, frequencies_test)
+cost_test = cost_matrix_test[0][len(keys_test) - 1]
+
+print("\nTest Case:")
+print("Cost of the Optimal Binary Search Tree:", cost_test)
