@@ -1,0 +1,30 @@
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        swapped = False
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                swapped = True
+        if not swapped:
+            break
+    return arr
+
+# Test Cases
+# 1. Worst-Case Scenario
+worst_case = [5, 4, 3, 2, 1]
+sorted_worst_case = bubble_sort(worst_case.copy())
+print("Worst-case input:", worst_case)
+print("Sorted output:", sorted_worst_case)
+
+# 2. Best-Case Scenario
+best_case = [1, 2, 3, 4, 5]
+sorted_best_case = bubble_sort(best_case.copy())
+print("Best-case input:", best_case)
+print("Sorted output:", sorted_best_case)
+
+# 3. Average-Case Scenario
+average_case = [3, 1, 4, 2, 5]
+sorted_average_case = bubble_sort(average_case.copy())
+print("Average-case input:", average_case)
+print("Sorted output:", sorted_average_case)
