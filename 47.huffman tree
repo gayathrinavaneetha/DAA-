@@ -1,0 +1,20 @@
+from itertools import permutations
+def assignment_problem(cost_matrix):
+    num_workers = len(cost_matrix)
+    min_cost = float('inf')
+    best_assignment = None
+    
+    for perm in permutations(range(num_workers)):
+        current_cost = sum(cost_matrix[i][perm[i]] for i in range(num_workers))
+        if current_cost < min_cost:
+            min_cost = current_cost
+            best_assignment = perm
+    return best_assignment, min_cost
+
+# Example usage
+cost_matrix = [
+    [10, 2, 8],
+    [10, 4, 7],
+    [3, 5, 9]
+]
+print(assignment_problem(cost_matrix))  # Outputs the optimal assignment and cost
