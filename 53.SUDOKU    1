@@ -23,7 +23,7 @@ def solve_sudoku(board):
                     return False
         return True
 
-    solve()
+    return solve()
 
 # Example input
 board = [
@@ -38,8 +38,9 @@ board = [
     [".",".",".",".","8",".",".","7","9"]
 ]
 
-solve_sudoku(board)
-
-# Output the solved board
-for row in board:
-    print(row)
+if solve_sudoku(board):
+    # Output the solved board
+    for row in board:
+        print(row)
+else:
+    print("No solution exists for the given Sudoku board")

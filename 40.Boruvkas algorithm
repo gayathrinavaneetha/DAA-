@@ -36,6 +36,7 @@ def boruvkas_algorithm(edges, num_vertices):
                 if cheapest[set_v] == -1 or cheapest[set_v][2] > weight:
                     cheapest[set_v] = (u, v, weight)
 
+        merged = False
         for entry in cheapest:
             if entry != -1:
                 u, v, weight = entry
@@ -44,6 +45,10 @@ def boruvkas_algorithm(edges, num_vertices):
                     mst_edges.append((u, v, weight))
                     total_cost += weight
                     num_components -= 1
+                    merged = True
+
+        if not merged:
+            raise ValueError("Graph is disconnected; no spanning tree exists")
 
     return mst_edges, total_cost
 
