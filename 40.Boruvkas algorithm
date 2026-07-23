@@ -1,20 +1,4 @@
-def find(parent, u):
-    if parent[u] != u:
-        parent[u] = find(parent, parent[u])
-    return parent[u]
-
-def union(parent, rank, u, v):
-    root_u = find(parent, u)
-    root_v = find(parent, v)
-
-    if root_u != root_v:
-        if rank[root_u] > rank[root_v]:
-            parent[root_v] = root_u
-        elif rank[root_u] < rank[root_v]:
-            parent[root_u] = root_v
-        else:
-            parent[root_v] = root_u
-            rank[root_u] += 1
+from daa_utils import find, union
 
 def boruvkas_algorithm(edges, num_vertices):
     parent = list(range(num_vertices))

@@ -1,24 +1,4 @@
-def optimal_bst(keys, freq):
-    n = len(keys)
-    cost = [[0] * n for _ in range(n)]
-    root = [[0] * n for _ in range(n)]
-    
-    for i in range(n):
-        cost[i][i] = freq[i]
-        root[i][i] = i
-
-    for length in range(2, n + 1):
-        for i in range(n - length + 1):
-            j = i + length - 1
-            cost[i][j] = float('inf')
-            for r in range(i, j + 1):
-                sum_freq = sum(freq[k] for k in range(i, j + 1))
-                current_cost = (cost[i][r - 1] if r > i else 0) + (cost[r + 1][j] if r < j else 0) + sum_freq
-                if current_cost < cost[i][j]:
-                    cost[i][j] = current_cost
-                    root[i][j] = r
-
-    return cost, root
+from daa_utils import optimal_bst
 
 def print_bst_structure(root, keys):
     def print_tree(r, level):
