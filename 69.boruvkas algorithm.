@@ -1,3 +1,4 @@
+class Graph:
     def __init__(self, vertices):
         self.V = vertices
         self.graph = []
@@ -27,7 +28,7 @@
         for node in range(self.V):
             parent.append(node)
             rank.append(0)
-            cheapest = [-1] * len(self.graph)
+        cheapest = [-1] * self.V
         while num_trees > 1:
             for i in range(len(self.graph)):
                 u, v, w = self.graph[i]
@@ -46,9 +47,9 @@
                     if set_u != set_v:
                         mst_weight += w
                         self.union(parent, rank, set_u, set_v)
+                        num_trees -= 1
                         print(f"Edge {u} - {v} with weight {w} included in MST")
-            cheapest = [-1] * len(self.graph)
-            num_trees -= 1
+            cheapest = [-1] * self.V
         print(f"Total weight of MST is {mst_weight}")
 g = Graph(4)
 g.add_edge(0, 1, 10)
