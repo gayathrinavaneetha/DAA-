@@ -16,6 +16,8 @@ def prims_algorithm(graph):
                             minimum = graph[i][j]
                             x = i
                             y = j       
+        if minimum == sys.maxsize:
+            raise ValueError("Graph is disconnected; no spanning tree exists")
         edges.append((x, y, minimum))
         selected_nodes[y] = True
     return edges
